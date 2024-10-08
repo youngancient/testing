@@ -1,8 +1,7 @@
 import { HardhatUserConfig } from "hardhat/config";
 import "@nomicfoundation/hardhat-toolbox";
-require('dotenv').config();
-
-
+import "@nomicfoundation/hardhat-web3-v4";
+require("dotenv").config();
 
 const config: HardhatUserConfig = {
   solidity: "0.8.24",
@@ -15,13 +14,24 @@ const config: HardhatUserConfig = {
   networks: {
     swisstronik: {
       url: "https://json-rpc.testnet.swisstronik.com/",
-      accounts: [`${process.env.TESTNET_PRIVATE_KEY}`],
+      accounts: [`0x` + `${process.env.TESTNET_PRIVATE_KEY!}`],
     },
   },
-  etherscan :{
-    apiKey : {
-      sepolia : `${process.env.ETHERSCAN_API_KEY}`
-    }
+  etherscan: {
+    apiKey: `ANY_STRING_WILL_DO`,
+    customChains: [
+      {
+        network: "swisstronik",
+        chainId: 1291,
+        urls: {
+          apiURL: "https://explorer-evm.testnet.swisstronik.com/api",
+          browserURL: "https://explorer-evm.testnet.swisstronik.com",
+        },
+      },
+    ],
+  },
+  sourcify: {
+    enabled: true
   }
 };
 
